@@ -16,4 +16,4 @@ ExoMaster is a tool for managing and running exercises in a classroom setting. I
 - Use the default exercises by the bac subject in NSI (France)
 
 
-Make by [Jules Lofficial](https://pandaguerrier.fr)
+Made by [Jules Lofficial](https://pandaguerrier.fr)
