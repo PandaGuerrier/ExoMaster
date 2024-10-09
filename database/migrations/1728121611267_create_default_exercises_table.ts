@@ -10,6 +10,7 @@ export default class extends BaseSchema {
       table.text('description').notNullable()
       table.text('consign').notNullable()
       table.integer('points').notNullable()
+      table.text('code').notNullable().defaultTo('')
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

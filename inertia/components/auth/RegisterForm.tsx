@@ -58,6 +58,8 @@ export default function RegisterForm() {
         position: "bottom-right",
         duration: 5000,
       })
+
+      window.location.reload()
     } catch (e: any) {
       console.log(e)
       sortErrors(e.response.errors)

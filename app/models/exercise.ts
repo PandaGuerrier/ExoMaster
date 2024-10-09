@@ -12,10 +12,16 @@ export default class Exercise extends BaseModel {
   declare defaultExercice: BelongsTo<typeof DefaultExercise>
 
   @column()
+  declare defaultExerciseId: number
+
+  @column()
   declare isFinish: boolean
 
   @belongsTo(() => Subject)
   declare subject: BelongsTo<typeof Subject>
+
+  @column()
+  declare subjectId: number
 
   @column()
   declare code: string // the code enter by the user

@@ -22,7 +22,7 @@ export const createAuthRegisterValidator = vine.compile(
 
 export const createAuthLoginValidator = vine.compile(
   vine.object({
-    username: vine.string().email(),
+    username: vine.string(),
     password: vine.string().minLength(5),
   })
 )

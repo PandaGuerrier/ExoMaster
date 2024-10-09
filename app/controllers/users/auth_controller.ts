@@ -9,12 +9,13 @@ export default class AuthController {
     const user = await User.verifyCredentials(data.username, data.password)
 
     if (!user) {
+      console.log('Invalid credentials')
       return response.unauthorized('Invalid credentials')
     }
 
-    await auth.use('web').authenticateAsClient(user)
+    await auth.use('web').login(user)
 
-    return response.ok(auth.use('web').user)
+    return response.ok(user)
   }
 
   public async register({ auth, request, response }: HttpContext) {
@@ -28,6 +29,6 @@ export default class AuthController {
 
   public async logout({ auth, response }: HttpContext) {
     await auth.use('web').logout()
-    return response.ok('Logged out successfully')
+    return response.redirect().toRoute('home')
   }
 }

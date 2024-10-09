@@ -14,8 +14,8 @@ export default function AuthModal({selectedStr}) {
       <Button onPress={() => {
         onOpen()
         setSelected('register')
-      }} color="primary" variant="flat">
-        Register
+      }} color="primary" variant="shadow">
+        Commencer dès maintenant
       </Button>
       <Modal
         isOpen={isOpen}

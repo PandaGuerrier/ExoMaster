@@ -10,8 +10,8 @@ export default class extends BaseSchema {
       table.boolean('is_finish').defaultTo(false)
       table.boolean('is_good').defaultTo(false)
       table.integer('subject_id').unsigned().references('id').inTable('subjects').onDelete('CASCADE')
-      table.text('code').notNullable()
-      table.text('result').notNullable()
+      table.text('code').notNullable().defaultTo('# Écrivez votre code ici')
+      table.text('result').notNullable().defaultTo('')
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

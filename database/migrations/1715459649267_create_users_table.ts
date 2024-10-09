@@ -10,6 +10,7 @@ export default class extends BaseSchema {
       table.string('password').nullable()
       table.string('remember_me_token').nullable()
       table.integer('role_id').unsigned().references('id').inTable('roles').onDelete('CASCADE') // 0 is student
+      table.integer('group_id').unsigned().references('id').inTable('groups').onDelete('CASCADE')
 
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()

@@ -1,8 +1,6 @@
-"use client";
 import { cn } from '~/lib/utils';
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { IconMenu2, IconX } from "@tabler/icons-react";
 import { LinkProps } from '@nextui-org/react'
 import { Link } from '@inertiajs/react'
 
@@ -120,21 +118,26 @@ export const MobileSidebar = ({
         )}
         {...props}
       >
-        <div className="flex justify-end z-20 w-full">
-          <IconMenu2
-            className="text-neutral-200"
-            onClick={() => setOpen(!open)}
-          />
+        <div className="flex justify-end z-20 w-full text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+               className="lucide lucide-align-right"
+                onClick={() => setOpen(!open)}
+          >
+            <line x1="21" x2="3" y1="6" y2="6"/>
+            <line x1="21" x2="9" y1="12" y2="12"/>
+            <line x1="21" x2="7" y1="18" y2="18"/>
+          </svg>
         </div>
         <AnimatePresence>
           {open && (
             <motion.div
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "-100%", opacity: 0 }}
+              initial={{x: '-100%', opacity: 0}}
+              animate={{x: 0, opacity: 1}}
+              exit={{x: '-100%', opacity: 0}}
               transition={{
                 duration: 0.3,
-                ease: "easeInOut",
+                ease: 'easeInOut'
               }}
               className={cn(
                 "fixed h-full w-full inset-0 bg-neutral-900 p-10 z-[100] flex flex-col justify-between",
@@ -145,7 +148,12 @@ export const MobileSidebar = ({
                 className="absolute right-10 top-10 z-50 text-neutral-200"
                 onClick={() => setOpen(!open)}
               >
-                <IconX />
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                     className="lucide lucide-x">
+                  <path d="M18 6 6 18"/>
+                  <path d="m6 6 12 12"/>
+                </svg>
               </div>
               {children}
             </motion.div>
@@ -157,21 +165,20 @@ export const MobileSidebar = ({
 };
 
 export const SidebarLink = ({
-  link,
-  className,
-  ...props
-}: {
+                              link,
+                              className,
+                              ...props
+                            }: {
   link: Links;
   className?: string;
   props?: LinkProps;
 }) => {
   const { open, animate } = useSidebar();
-
   return (
     <Link
       href={link.href}
       className={cn(
-        "flex items-center justify-start gap-2  group/sidebar py-2",
+        "flex items-center justify-start gap-2 group/sidebar py-2",
         className
       )}
       {...props}

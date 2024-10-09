@@ -16,6 +16,7 @@ export default function LoginForm() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify({
           username: event.currentTarget.username.value,
@@ -23,23 +24,27 @@ export default function LoginForm() {
           rememberMe: rememberMe,
         }),
       })
+      const data = await response.json()
+      console.log(data)
 
       if (!response.ok) {
+          console.log(response)
           setError("Vos identifiants sont incorrects.")
           return;
       }
 
-      const data = await response.json()
+      console.log(response)
 
       if (data.error) {
+        console.log(data.error)
         setError(data.error)
         return;
       }
 
       toast.success('Vous êtes connecté.')
-
       window.location.reload()
     }  catch (e: any) {
+      console.log(e)
       setError("Vos identifiants sont incorrects.")
       return;
     }

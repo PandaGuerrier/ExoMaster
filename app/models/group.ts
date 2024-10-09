@@ -1,26 +1,20 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, manyToMany } from '@adonisjs/lucid/orm'
-import DefaultExercise from '#models/default_exercise'
 import type { ManyToMany } from '@adonisjs/lucid/types/relations'
+import User from '#models/user'
 
-export default class DefaultSubject extends BaseModel {
+export default class Group extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare default: boolean
+  declare name: string
 
-  @column()
-  declare title: string | null
+  @manyToMany(() => User)
+  declare students: ManyToMany<typeof User>
 
-  @column()
-  declare description: string | null
-
-  @column()
-  declare number: number
-
-  @manyToMany(() => DefaultExercise)
-  declare exercises: ManyToMany<typeof DefaultExercise>
+  @manyToMany(() => User)
+  declare teachers: ManyToMany<typeof User>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

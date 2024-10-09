@@ -15,6 +15,9 @@ export default class DefaultExercise extends BaseModel {
   declare consign: string
 
   @column()
+  declare code: string
+
+  @column()
   declare points: number
 
   @column.dateTime({ autoCreate: true })

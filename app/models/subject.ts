@@ -12,6 +12,9 @@ export default class Subject extends BaseModel {
   declare defaultSubject: BelongsTo<typeof DefaultSubject>
 
   @column()
+  declare defaultSubjectId: number
+
+  @column()
   declare isFinish: boolean
 
   @manyToMany(() => Exercise)

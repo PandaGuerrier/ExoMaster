@@ -1,7 +1,7 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'default_subjects_default_exercises'
+  protected tableName = 'default_exercise_default_subject'
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {

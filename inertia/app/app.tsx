@@ -1,9 +1,12 @@
+/// <reference path="../../adonisrc.ts" />
+/// <reference path="../../config/auth.ts" />
+
 import '../css/app.css';
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Panda <3'
+const appName = import.meta.env.VITE_APP_NAME || 'ExoMaster';
 
 createInertiaApp({
   progress: { color: '#5468FF' },
