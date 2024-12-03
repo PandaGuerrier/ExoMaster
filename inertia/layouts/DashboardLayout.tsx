@@ -6,6 +6,7 @@ import { useState } from 'react'
 import * as React from 'react'
 import { Button, Image } from '@nextui-org/react'
 import useAuth from '~/hooks/use_auth'
+import { Toaster } from 'sonner'
 
 export default function DashboardLayout({children}: { children: React.ReactNode }) {
 
@@ -74,65 +75,64 @@ export default function DashboardLayout({children}: { children: React.ReactNode 
   const auth = useAuth()
 
   return (
-    <div
-      className={'absolute inset-0 overflow-hidden flex flex-col md:flex-row bg-neutral-900 dark:bg-neutral-800'}>
+    <>
+      <Toaster/>
+      <div
+        className={'absolute inset-0 overflow-hidden flex flex-col md:flex-row bg-neutral-900 dark:bg-neutral-800'}>
 
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-            {open ? <Logo/> : <LogoIcon/>}
-            <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link}/>
-              ))}
+        <Sidebar open={open} setOpen={setOpen}>
+          <SidebarBody className="justify-between gap-10">
+            <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+              {open ? <Logo/> : <LogoIcon/>}
+              <div className="mt-8 flex flex-col gap-2">
+                {links.map((link, idx) => (
+                  <SidebarLink key={idx} link={link}/>
+                ))}
+              </div>
             </div>
-          </div>
-          <div>
-            {
-              open && (
+            <div>
+              {open && (
                 <div className={'text-white'}>Connecté en tant que</div>
-              )
-            }
-            <SidebarLink
-              link={{
-                label: auth.user.username,
-                href: '#',
-                icon: (
-                  <Image
-                    src={'https://ui-avatars.com/api/?name=' + auth.user.username + '&background=random&color=fff'}
-                    radius={'full'}
-                    width={40}
-                    className={'flex-shrink-0'}
-                  />
-                )
-              }}
-            />
+              )}
+              <SidebarLink
+                link={{
+                  label: auth.user.username,
+                  href: '#',
+                  icon: (
+                    <Image
+                      src={'https://ui-avatars.com/api/?name=' + auth.user.username + '&background=random&color=fff'}
+                      radius={'full'}
+                      width={40}
+                      className={'flex-shrink-0'}/>
+                  )
+                }}/>
 
-            <div className={""}>
-              <Button
-                variant={'flat'}
-                color={'danger'}
-                isIconOnly={!open}
-                type={'button'}
-                radius={'md'}
-                onClick={() => logout()}
-                fullWidth
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                     className="lucide lucide-arrow-left-from-line">
-                  <path d="m9 6-6 6 6 6"/>
-                  <path d="M3 12h14"/>
-                  <path d="M21 19V5"/>
-                </svg>
-                {open && 'Déconnexion'}
-              </Button>
+              <div className={''}>
+                <Button
+                  variant={'flat'}
+                  color={'danger'}
+                  isIconOnly={!open}
+                  type={'button'}
+                  radius={'md'}
+                  onClick={() => logout()}
+                  fullWidth
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                       className="lucide lucide-arrow-left-from-line">
+                    <path d="m9 6-6 6 6 6"/>
+                    <path d="M3 12h14"/>
+                    <path d="M21 19V5"/>
+                  </svg>
+                  {open && 'Déconnexion'}
+                </Button>
+              </div>
             </div>
-          </div>
-        </SidebarBody>
-      </Sidebar>
-      <Dashboard children={children}/>
-    </div>
+          </SidebarBody>
+        </Sidebar>
+        <Dashboard children={children}/>
+      </div>
+    </>
   )
 }
 export const Logo = () => {
