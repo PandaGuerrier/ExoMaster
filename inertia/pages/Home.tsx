@@ -23,7 +23,7 @@ export default function Home() {
                                                                                className={'text-white'}/>avec <span
           className={'text-blue-600'}>ExoMaster</span></h1>
         <p className="text-center text-xl">
-          ExoMaster est une plateforme d'entraînement en ligne pour les étudiants en informatique, spécialiser avec les
+          ExoMaster est une plateforme d'entraînement en ligne pour les étudiants en informatique, spécialisé avec les
           sujets de bac de NSI.
         </p>
         <AuthModal selectedStr={'login'}/>
@@ -36,7 +36,7 @@ export default function Home() {
                     duration: 0.8,
                     ease: 'easeInOut'
                   }}>
-        Fait par <Link href="https://pandaguerrier.fr/" target="_blank" className="text-blue-600">Jules Lofficial</Link>
+        Réalisé par <Link href="https://pandaguerrier.fr/" target="_blank" className="text-blue-600">Jules Lofficial</Link>
       </motion.div>
     </AuroraBackground>
   )
