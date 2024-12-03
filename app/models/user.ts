@@ -77,7 +77,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
         const subject = await Subject.create({
           defaultSubjectId: defaultSubject.id,
-          isFinish: false
+          isFinish: false,
+          userId: user.id,
         })
 
         for (const defaultExercise of defaultExercises) {

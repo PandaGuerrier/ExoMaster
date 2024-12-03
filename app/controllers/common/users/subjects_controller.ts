@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Subject from '#models/subject'
+import SubjectPolicy from '#policies/subject_policy'
 
 export default class SubjectsController {
   public async index({ auth, inertia }: HttpContext) {
@@ -10,17 +11,21 @@ export default class SubjectsController {
     })
   }
 
-  public async show({ auth, inertia, params }: HttpContext) {
+  public async show({ inertia, params, bouncer, response }: HttpContext) {
     const subject = await Subject.query()
       .where('id', params.id)
-      .andWhere // en gros faut que tu verif les id et tout galère
-      .preload('exercises')
-      .preload('defaultSubject')
       .firstOrFail()
 
-    subject!.exercises.map(async (exercise) => {
+    if(await bouncer.with(SubjectPolicy).allows('canShowSubject', subject)) {
+      return response.redirect('/subjects')
+    }
+
+    await subject.load('exercises')
+    await subject.load('defaultSubject')
+
+    for (let exercise of subject!.exercises) {
       await exercise.load('defaultExercice')
-    })
+    }
 
     return inertia.render('connected/subjects/Show', {
       subject
