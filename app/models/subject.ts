@@ -17,6 +17,9 @@ export default class Subject extends BaseModel {
   @column()
   declare isFinish: boolean
 
+  @column()
+  declare userId: number
+
   @manyToMany(() => Exercise)
   declare exercises: ManyToMany<typeof Exercise>
 
