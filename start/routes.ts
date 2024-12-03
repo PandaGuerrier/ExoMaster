@@ -12,6 +12,7 @@ import { middleware } from '#start/kernel'
 import AuthController from '#controllers/users/auth_controller'
 import HomeController from '#controllers/common/users/home_controller'
 import SubjectsController from '#controllers/common/users/subjects_controller'
+import ExercisesController from '#controllers/common/users/exercises_controller'
 
 router.group(() => {
   router.group(() => {
@@ -25,6 +26,12 @@ router.group(() => {
 router.group(() => {
   router.get('/', [SubjectsController, 'index'])
   router.get('/:id', [SubjectsController, 'show'])
+
+  router.group(() => {
+    router.get('/', [ExercisesController, 'show'])
+    router.put('/', [ExercisesController, 'update'])
+  }).prefix('/:id/exercises/:exercise')
+
 }).prefix('subjects').use(middleware.auth())
 
 router.get('/', [HomeController, 'index']).as('home')
