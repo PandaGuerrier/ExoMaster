@@ -6,14 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title inertia>Chargement - ExoMaster</title>
-
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
   @viteReactRefresh()
   @inertiaHead()
   @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}.tsx`, 'resources/css/app.css'])
 </head>
 
-<body class="bg-black h-full">
+<body class="bg-black h-full dark">
   @inertia()
 </body>
 
+<script>
+ document.classList.add('dark')
+</script>
 </html>
+
