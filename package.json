@@ -59,6 +59,7 @@
   "dependencies": {
     "@adonisjs/ally": "^5.0.2",
     "@adonisjs/auth": "^9.2.1",
+    "@adonisjs/bouncer": "^3.1.4",
     "@adonisjs/core": "^6.9.0",
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/inertia": "1.0.0-27",
@@ -71,6 +72,8 @@
     "@monaco-editor/react": "^4.6.0",
     "@nextui-org/react": "^2.3.6",
     "@tabler/icons-react": "^3.19.0",
+    "@uiw/react-monacoeditor": "^3.6.0",
+    "@uiw/react-textarea-code-editor": "^3.1.0",
     "@vinejs/vine": "^2.0.0",
     "ally-custom-service": "/home/panda/WebstormProjects/ally-starter-kit",
     "clsx": "^2.1.1",
@@ -85,9 +88,11 @@
     "pg": "^8.11.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-py": "^1.11.2",
     "react-wallets": "^0.2.4",
     "reflect-metadata": "^0.2.2",
-    "sonner": "^1.5.0",
+    "rehype-prism-plus": "^2.0.0",
+    "sonner": "^1.7.0",
     "tailwind-merge": "^2.5.3"
   },
   "hotHook": {
