@@ -13,5 +13,6 @@
 */
 
 export const policies = {
+  ExercisePolicy: () => import('#policies/exercise_policy'),
   SubjectPolicy: () => import('#policies/subject_policy')
 }
