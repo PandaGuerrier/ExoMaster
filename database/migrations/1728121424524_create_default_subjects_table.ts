@@ -10,6 +10,7 @@ export default class extends BaseSchema {
       table.boolean('default').notNullable().defaultTo(false)
       table.text('description').notNullable()
       table.integer('number').notNullable()
+      table.integer('user_id').notNullable()
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

@@ -19,6 +19,9 @@ export default class DefaultSubject extends BaseModel {
   @column()
   declare number: number
 
+  @column()
+  declare userId: number // the teacher who created the subject
+
   @manyToMany(() => DefaultExercise)
   declare exercises: ManyToMany<typeof DefaultExercise>
 

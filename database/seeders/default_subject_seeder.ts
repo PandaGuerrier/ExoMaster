@@ -37,18 +37,21 @@ export default class extends BaseSeeder {
         title: 'Mathematics',
         description: 'Mathematics is the study of numbers, shapes, and patterns.',
         number: 1,
+        userId: 1
       },
       {
         default: true,
         title: 'Physics',
         description: 'Physics is the study of matter, energy, and the interactions between them.',
-        number: 2
+        number: 2,
+        userId: 1
       },
       {
         default: true,
         title: 'Chemistry',
         description: 'Chemistry is the study of the composition, properties, and reactions of matter.',
-        number: 3
+        number: 3,
+        userId: 1
       }
     ])
 
