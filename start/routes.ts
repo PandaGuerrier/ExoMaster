@@ -24,6 +24,15 @@ router.group(() => {
 }).prefix('auth')
 
 router.group(() => {
+
+  router.group(() => {
+    router.post('/exercise', [ExercisesController, 'store'])
+    router.post('/', [SubjectsController, 'store'])
+
+    router.get('/', [SubjectsController, 'indexTeacher'])
+    router.get('/:id', [SubjectsController, 'showTeacher'])
+  }).prefix('/me').use(middleware.role([2,3])) // Only teachers and admins can create subjects
+
   router.get('/', [SubjectsController, 'index'])
   router.get('/:id', [SubjectsController, 'show'])
 
@@ -31,6 +40,7 @@ router.group(() => {
     router.get('/', [ExercisesController, 'show'])
     router.put('/', [ExercisesController, 'update'])
   }).prefix('/:id/exercises/:exercise')
+
 
 }).prefix('subjects').use(middleware.auth())
 

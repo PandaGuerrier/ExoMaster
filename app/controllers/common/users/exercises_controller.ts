@@ -3,6 +3,7 @@ import Subject from '#models/subject'
 import SubjectPolicy from '#policies/subject_policy'
 import Exercise from '#models/exercise'
 import { createExerciseUpdateValidator } from '#validators/exercise'
+import ExercisePolicy from '#policies/exercise_policy'
 
 export default class ExercisesController {
   public async show({ inertia, params, bouncer, response }: HttpContext) {
@@ -29,7 +30,7 @@ export default class ExercisesController {
     })
   }
 
-  public async update({ request, params }: HttpContext) {
+  public async update({ request, params, bouncer, response }: HttpContext) {
     const data = await request.validateUsing(createExerciseUpdateValidator)
 
     const exercise = await Exercise.query()
@@ -37,9 +38,17 @@ export default class ExercisesController {
       .andWhere('subject_id', params.id)
       .firstOrFail()
 
+    if(await bouncer.with(ExercisePolicy).allows('canUpdate', exercise)) {
+      return response.redirect('/subjects')
+    }
+
     exercise.merge(data)
     await exercise.save()
 
     return exercise
+  }
+
+  public async store({}: HttpContext) {
+    // TODO
   }
 }
