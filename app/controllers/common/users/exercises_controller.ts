@@ -49,6 +49,5 @@ export default class ExercisesController {
   }
 
   public async store({}: HttpContext) {
-    // TODO
   }
 }
