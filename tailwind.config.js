@@ -28,7 +28,13 @@ export default {
     },
   },
   darkMode: "class",
-  plugins: [nextui(), addVariablesForColors],
+  plugins: [nextui({
+    prefix: "nextui", // prefix for themes variables
+    addCommonColors: false, // override common colors (e.g. "blue", "green", "pink").
+    defaultTheme: "dark", // default theme from the themes object
+    defaultExtendTheme: "dark", // default theme to extend on custom themes
+  }),
+  addVariablesForColors],
 };
 
 // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).

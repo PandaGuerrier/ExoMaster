@@ -2,7 +2,16 @@
   "extends": "@adonisjs/tsconfig/tsconfig.app.json",
   "compilerOptions": {
     "rootDir": "./",
-    "outDir": "./build"
+    "outDir": "./build",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./inertia/components/ui/*"
+      ]
+    }
   },
-  "exclude": ["node_modules/**/*", "build"],
+  "exclude": [
+    "node_modules/**/*",
+    "build"
+  ]
 }
