@@ -93,7 +93,7 @@ export default function DashboardLayout({children}: { children: React.ReactNode 
     <>
       <Toaster/>
       <div
-        className={'absolute inset-0 overflow-hidden flex flex-col md:flex-row bg-neutral-900 dark:bg-neutral-800'}>
+        className={'dark text-foreground absolute inset-0 overflow-hidden flex flex-col md:flex-row bg-neutral-900 dark:bg-neutral-800'}>
 
         <Sidebar open={open} setOpen={setOpen}>
           <SidebarBody className="justify-between gap-10">
