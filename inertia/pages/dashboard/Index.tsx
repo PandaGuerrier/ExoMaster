@@ -2,7 +2,7 @@ import useAuth from '~/hooks/use_auth'
 import DashboardLayout from '~/layouts/DashboardLayout'
 import { Head } from '@inertiajs/react'
 
-export default function DashboardHome() {
+export default function Index() {
   const auth = useAuth()
   console.log(auth)
   return (

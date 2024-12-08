@@ -8,6 +8,6 @@ export default class HomeController {
        return inertia.render('Home')
     }
 
-    return inertia.render('connected/Dashboard')
+    return inertia.render('dashboard/Index')
   }
 }

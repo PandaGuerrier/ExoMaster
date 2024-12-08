@@ -4,7 +4,7 @@ import { InferPageProps } from '@adonisjs/inertia/types'
 import SubjectsController from '#controllers/common/users/subjects_controller'
 import { Button } from '@nextui-org/react'
 
-export default function SubjectTeacher({ subjects }: InferPageProps<SubjectsController, 'indexTeacher'>) {
+export default function SubjectTeacher({ subjects }: InferPageProps<SubjectsController, 'index'>) {
   return (
     <DashboardLayout>
       <Head title="Création de sujet !"/>

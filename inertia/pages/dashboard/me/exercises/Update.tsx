@@ -5,7 +5,7 @@ import SubjectsController from '#controllers/common/users/subjects_controller'
 import TableExercise from '#ui/exercises/table-exercise.tsx'
 
 // @ts-ignore
-export default function Modify({ subject }: InferPageProps<SubjectsController, 'showTeacher'>) {
+export default function Update({ subject }: InferPageProps<SubjectsController, 'show'>) {
   return (
     <DashboardLayout>
       <Head title={subject!.title}/>

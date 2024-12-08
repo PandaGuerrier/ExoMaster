@@ -17,7 +17,7 @@ export default class DefaultSubject extends BaseModel {
   declare description: string | null
 
   @column()
-  declare number: number
+  declare number: number // the number of the subject (bac)
 
   @column()
   declare userId: number // the teacher who created the subject

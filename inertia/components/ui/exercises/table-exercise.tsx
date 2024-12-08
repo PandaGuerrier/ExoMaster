@@ -17,6 +17,7 @@ import {
   SortDescriptor
 } from '@nextui-org/react'
 import DefaultExercise from '#models/default_exercise'
+import { Link } from '@inertiajs/react'
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
@@ -231,6 +232,12 @@ export default function TableExercise({defaultExercises}: { defaultExercises: De
             <p className="text-small ">{exercise.points}</p>
           </div>
         )
+      case 'id':
+        return (
+          <div>
+            <p className="text-small ">{exercise.id}</p>
+          </div>
+        )
       case 'actions':
         return (
           <div className="relative flex justify-end items-center gap-2">
@@ -323,7 +330,7 @@ export default function TableExercise({defaultExercises}: { defaultExercises: De
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button color="primary" endContent={<PlusIcon/>}>
+            <Button color="primary" endContent={<PlusIcon/>} as={Link} href={"create"}>
               Ajouter un exercice
             </Button>
           </div>

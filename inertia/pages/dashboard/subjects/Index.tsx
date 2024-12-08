@@ -7,7 +7,7 @@ import { Button } from '@nextui-org/react'
 import FlipNumbers from 'react-flip-numbers'
 import { useEffect, useState } from 'react'
 
-export default function SubjectIndex({subjects}: InferPageProps<SubjectsController, 'index'>) {
+export default function Index({subjects}: InferPageProps<SubjectsController, 'index'>) {
   const [totalExercises, setTotalExercises] = useState<number>(0)
   const [play, setPlay] = useState<boolean>(false)
 

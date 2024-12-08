@@ -24,7 +24,7 @@ export default class ExercisesController {
     await subject.load('defaultSubject')
     await exercise.load('defaultExercice')
 
-    return inertia.render('connected/subjects/exercises/Show', {
+    return inertia.render('dashboard/exercises/Show', {
       subject,
       exercise
     })

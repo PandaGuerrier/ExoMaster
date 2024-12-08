@@ -76,6 +76,7 @@
     "@radix-ui/react-dropdown-menu": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@tabler/icons-react": "^3.19.0",
+    "@uiw/react-markdown-editor": "^6.1.2",
     "@uiw/react-monacoeditor": "^3.6.0",
     "@uiw/react-textarea-code-editor": "^3.1.0",
     "@vinejs/vine": "^2.0.0",
