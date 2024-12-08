@@ -36,7 +36,7 @@ export default class SubjectsController {
   public async indexTeacher({ inertia, auth }: HttpContext) {
     const subjects = await DefaultSubject.query().where('userId', auth.use('web').user!.id).preload('exercises').exec()
 
-    return inertia.render('connected/subjects/create/Index', {
+    return inertia.render('connected/subjects/me/Index', {
       subjects: subjects || [] as DefaultSubject[]
     })
   }
@@ -50,7 +50,7 @@ export default class SubjectsController {
 
     await subject.load('exercises')
 
-    return inertia.render('connected/subjects/create/ShowTeacher', {
+    return inertia.render('connected/subjects/me/Show', {
       subject
     })
   }
