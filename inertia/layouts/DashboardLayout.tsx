@@ -101,7 +101,7 @@ export default function DashboardLayout({children}: { children: React.ReactNode 
               {open ? <Logo/> : <LogoIcon/>}
               <div className="mt-8 flex flex-col gap-2">
                 {links.map((link, idx) => (
-                  link.role && link.role !== auth.user.roleId ? null : <SidebarLink key={idx} link={link}/>
+                  link.role && link.role > auth.user.roleId ? null : <SidebarLink key={idx} link={link}/>
                 ))}
               </div>
             </div>

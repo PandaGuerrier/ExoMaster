@@ -1,27 +1,21 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeUpdate, belongsTo, column } from '@adonisjs/lucid/orm'
-import Subject from '#models/subject'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import DefaultExercise from '#models/default_exercise'
+import { BaseModel, beforeUpdate, column } from '@adonisjs/lucid/orm'
 
 export default class Exercise extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @belongsTo(() => DefaultExercise)
-  declare defaultExercice: BelongsTo<typeof DefaultExercise>
+  @column()
+  declare name: string
 
   @column()
-  declare defaultExerciseId: number
+  declare description: string | null
 
   @column()
   declare isFinish: boolean
 
-  @belongsTo(() => Subject)
-  declare subject: BelongsTo<typeof Subject>
-
   @column()
-  declare subjectId: number
+  declare userId: number
 
   @column()
   declare code: string // the code enter by the user
