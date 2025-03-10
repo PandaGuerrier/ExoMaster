@@ -18,18 +18,19 @@ function debounce(func: Function, wait: number) {
   }
 }
 
-// @ts-ignore
-export default function SubjectShow({subject, exercise}: InferPageProps<ExercisesController, 'show'>) {
+export default function ExerciseShow({ exercise }: InferPageProps<ExercisesController, 'show'>) {
   const [code, setCode] = useState(exercise.code)
   const [output, setOutput] = useState(exercise.result)
   const [pyodide, setPyodide] = useState<any>(null)
+  const [name, setName] = useState(exercise.name)
+  const [description, setDescription] = useState(exercise.description)
 
   useEffect(() => {
     const loadPyodide = async () => {
       const pyodide = await (window as any).loadPyodide({
         indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.18.1/full/',
         stdout: (msg: any) => setOutput((prev: any) => prev + '<div> >>> ' + msg + '</div>')
-      })
+      }) // mettre un wss pour l'execution avec le result
       console.log(pyodide)
       setPyodide(pyodide)
     }
@@ -41,6 +42,8 @@ export default function SubjectShow({subject, exercise}: InferPageProps<Exercise
 
   const save = useCallback(debounce(async () => {
     await axios.put(``, {
+      name: exercise.name,
+      description: exercise.description,
       code: code,
       result: output,
     })
@@ -49,6 +52,7 @@ export default function SubjectShow({subject, exercise}: InferPageProps<Exercise
   }, 1000), [code, output])
 
   const handleCodeChange = (value: string) => {
+    console.log('Code has changed:', value)
     setCode(value)
     save()
   }
@@ -60,7 +64,7 @@ export default function SubjectShow({subject, exercise}: InferPageProps<Exercise
       isFinish: true,
     }).then(() => {
       toast.success('Exercice terminé avec succès !')
-      setTimeout(() => window.location.href = `/subjects/${subject.id}`, 2000)
+      setTimeout(() => window.location.href = `/`, 2000)
     })
   }
 
@@ -83,12 +87,12 @@ export default function SubjectShow({subject, exercise}: InferPageProps<Exercise
 
   return (
     <DashboardLayout>
-      <Head title={exercise!.defaultExercice.title}/>
+      <Head title={name}/>
       <div className={'md:space-y-5'}>
         <div>{exercise.isFinish ? "Vous avez marqué cet exercise en fini !" : ""}</div>
-        <div className={'font-bold text-2xl'}>Titre de l'exercise: {exercise.defaultExercice.title}</div>
-        <div className={'font-bold'}>Consigne de l'exercise:</div>
-        <div>{exercise.defaultExercice.consign}</div>
+        <div className={'font-bold text-2xl'}>Nom de votre exercise: {name}</div>
+        <div className={'font-bold'}>Description de votre exercise:</div>
+        <div>{description}</div>
       </div>
       <div className={'md:flex md:space-x-5'}>
         <div className={'h-[50vh] md:h-[70vh] w-full'}>

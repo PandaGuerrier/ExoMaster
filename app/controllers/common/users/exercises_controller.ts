@@ -1,31 +1,19 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import Subject from '#models/subject'
-import SubjectPolicy from '#policies/subject_policy'
 import Exercise from '#models/exercise'
-import { createExerciseUpdateValidator } from '#validators/exercise'
+import { createExerciseStoreValidator, createExerciseUpdateValidator } from '#validators/exercise'
 import ExercisePolicy from '#policies/exercise_policy'
 
 export default class ExercisesController {
-  public async show({ inertia, params, bouncer, response }: HttpContext) {
-    const subject = await Subject.query()
-      .where('id', params.id)
-      .firstOrFail()
-
+  public async show({ inertia, params, auth }: HttpContext) {
+    const user = auth.use('web').user!
     const exercise = await Exercise.query()
-      .where('id', params.exercise)
-      .andWhere('subject_id', params.id)
+      .where('id', params.id)
+      .andWhere('userId', user.id)
       .firstOrFail()
 
-    if(await bouncer.with(SubjectPolicy).allows('canShowSubject', subject)) {
-      return response.redirect('/subjects')
-    }
-
-    await subject.load('exercises')
-    await subject.load('defaultSubject')
-    await exercise.load('defaultExercice')
+    console.log(exercise)
 
     return inertia.render('dashboard/exercises/Show', {
-      subject,
       exercise
     })
   }
@@ -34,20 +22,28 @@ export default class ExercisesController {
     const data = await request.validateUsing(createExerciseUpdateValidator)
 
     const exercise = await Exercise.query()
-      .where('id', params.exercise)
-      .andWhere('subject_id', params.id)
+      .where('id', params.id)
       .firstOrFail()
 
     if(await bouncer.with(ExercisePolicy).allows('canUpdate', exercise)) {
-      return response.redirect('/subjects')
+      return response.redirect('/')
     }
 
-    exercise.merge(data)
-    await exercise.save()
-
+    await exercise.merge(data).save()
     return exercise
   }
 
-  public async store({}: HttpContext) {
+  public async store({ request, response, auth }: HttpContext) {
+    const data = await request.validateUsing(createExerciseStoreValidator)
+    const user = auth.use('web').user!
+
+    const exercise = await Exercise.create({
+      ...data,
+      userId: user.id
+    })
+
+    await user.related('exercises').attach([exercise.id])
+
+    return response.redirect('/')
   }
 }

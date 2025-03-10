@@ -4,9 +4,8 @@ import { BasePolicy } from '@adonisjs/bouncer'
 
 export default class ExercisePolicy extends BasePolicy {
   async canUpdate(user: User, exercise: Exercise) {
-    await exercise.load('subject')
     await user.load('role')
 
-    return user.id == exercise.subject.userId || user.role.power == 50
+    return user.id == exercise.userId || user.role.power > 50
   }
 }
