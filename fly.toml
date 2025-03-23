@@ -1,15 +1,14 @@
-# fly.toml app configuration file generated for exomaster on 2025-03-23T17:22:04Z
+# fly.toml app configuration file generated for exomaster on 2025-03-23T19:43:08+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'exomaster'
 primary_region = 'cdg'
+
 [experimental]
   cmd = ["start.sh"]
   entrypoint = ["sh"]
-
-[build]
 
 [http_service]
   internal_port = 3000
