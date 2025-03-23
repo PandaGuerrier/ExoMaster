@@ -30,7 +30,7 @@ export default function FolderStoreModal({folders, setFolders, actFolder}: Folde
         parentId: actFolder ? actFolder.uuid : null
       })
     })
-    const data = await response.json()
+    const data: any = await response.json()
     console.log(data)
 
     if (!response.ok) {
@@ -41,12 +41,13 @@ export default function FolderStoreModal({folders, setFolders, actFolder}: Folde
 
     console.log(response)
 
+
     if (data.error) {
       console.log(data.error)
       setError('Erreur lors de la création du dossier.')
       return
     }
-    setFolders([...folders, data])
+    setFolders([...(folders as Folder[]), data as Folder])
     toast.success('Dossier créé.')
     onClose()
   }

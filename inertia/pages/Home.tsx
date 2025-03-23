@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Head, Link } from '@inertiajs/react'
 import { FlipWords } from '~/components/ui/flip-words'
 import AuthModal from '~/components/auth/AuthModal'
+import React from 'react'
 
 export default function Home() {
   const words = ['Code', 'Suit ta progression', 'Apprends', 'Réussi', 'Progresse', 'Évolue', 'Brille']

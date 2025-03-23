@@ -6,6 +6,7 @@ import Folder from '#models/folder'
 import FolderComponent from '~/components/Folder'
 import ExerciseStoreModal from '~/components/modals/ExerciseStoreModal'
 import FolderStoreModal from '~/components/modals/FolderStoreModal'
+import React from 'react'
 
 interface FolderProps {
   folder: Folder

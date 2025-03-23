@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react'
 import { Sidebar, SidebarBody, SidebarLink } from '~/components/ui/sidebar'
 import { useState } from 'react'
 
-import * as React from 'react'
+import React from 'react'
 import { Button, Image } from '@nextui-org/react'
 import useAuth from '~/hooks/use_auth'
 import { Toaster } from 'sonner'

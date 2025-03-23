@@ -34,7 +34,7 @@ export default function ExerciseStoreModal({exercises, setExercises, actFolder}:
         parentId: actFolder ? actFolder.uuid : null
       })
     })
-    const data = await response.json()
+    const data: any = await response.json()
     console.log(data)
 
     if (!response.ok) {
@@ -50,7 +50,7 @@ export default function ExerciseStoreModal({exercises, setExercises, actFolder}:
       setError("Erreur lors de la création de l'exercises.")
       return
     }
-    setExercises([...exercises, data])
+    setExercises([...(exercises as Exercise[]), data as Exercise])
     toast.success('Dossier créé.')
     onClose()
   }

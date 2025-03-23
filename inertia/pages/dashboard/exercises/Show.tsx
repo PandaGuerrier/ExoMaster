@@ -7,6 +7,14 @@ import MonacoEditor from '@uiw/react-monacoeditor'
 import { Button } from '@nextui-org/react'
 import axios from 'axios'
 import { toast } from 'sonner'
+import React from 'react'
+
+declare global {
+  interface window {
+    loadPyodide: any;
+  }
+}
+
 
 // Fonction de debounce
 function debounce(func: Function, wait: number) {
@@ -22,8 +30,8 @@ export default function ExerciseShow({ exercise }: InferPageProps<ExercisesContr
   const [code, setCode] = useState(exercise.code)
   const [output, setOutput] = useState(exercise.result)
   const [pyodide, setPyodide] = useState<any>(null)
-  const [name, setName] = useState(exercise.name)
-  const [description, setDescription] = useState(exercise.description)
+  const [name] = useState(exercise.name)
+  const [description] = useState(exercise.description)
 
   useEffect(() => {
     const loadPyodide = async () => {
@@ -98,7 +106,7 @@ export default function ExerciseShow({ exercise }: InferPageProps<ExercisesContr
         <div className={'h-[50vh] md:h-[70vh] w-full'}>
           <MonacoEditor
             language="python"
-            onChange={(value) => handleCodeChange(value)}
+            onChange={(value: string) => handleCodeChange(value)}
             value={exercise.code}
             options={{
               selectOnLineNumbers: true,
