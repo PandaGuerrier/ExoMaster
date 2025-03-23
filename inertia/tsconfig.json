@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "module": "ESNext",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./inertia/components/ui/*"],
