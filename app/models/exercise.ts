@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeUpdate, column } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeUpdate, belongsTo, column } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import Folder from '#models/folder'
 
 export default class Exercise extends BaseModel {
   @column({ isPrimary: true })
@@ -19,6 +21,12 @@ export default class Exercise extends BaseModel {
 
   @column()
   declare code: string // the code enter by the user
+
+  @column()
+  declare parentId: string | null // if null, it's a root exercise, else it's a child of the exercise with the id parentId
+
+  @belongsTo(() => Folder)
+  declare parent: BelongsTo<typeof Folder>
 
   @column()
   declare result: string // the result of the code
@@ -41,4 +49,15 @@ export default class Exercise extends BaseModel {
       exercise.finishedAt = DateTime.now()
     }
   }
+
+  async getPath(): Promise<string[]> {
+    if (this.parent === null) {
+      return [this.name]
+    }
+
+    let folder = this.parent
+    let path = await folder.getPath()
+    return path.concat(this.name)
+  }
+
 }

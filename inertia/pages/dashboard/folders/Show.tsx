@@ -1,4 +1,3 @@
-import useAuth from '~/hooks/use_auth'
 import DashboardLayout from '~/layouts/DashboardLayout'
 import { Head } from '@inertiajs/react'
 import { useEffect, useState } from 'react'
@@ -8,11 +7,14 @@ import FolderComponent from '~/components/Folder'
 import ExerciseStoreModal from '~/components/modals/ExerciseStoreModal'
 import FolderStoreModal from '~/components/modals/FolderStoreModal'
 
-export default function Index() {
-  const auth = useAuth()
+interface FolderProps {
+  folder: Folder
+}
+
+export default function Show({ folder }: FolderProps) {
   const [list, setList] = useState<any[]>([])
-  const [exercises, setExercises] = useState<Exercise[]>([...auth.user.exercises])
-  const [folders, setFolders] = useState<Folder[]>([...auth.user.folders])
+  const [exercises, setExercises] = useState<Exercise[]>([...folder.exercises])
+  const [folders, setFolders] = useState<Folder[]>([...folder.folders])
 
   useEffect(() => {
     const initialList = [
@@ -32,15 +34,12 @@ export default function Index() {
 
   return (
     <DashboardLayout>
-      <Head title={'Dashboard'}/>
-      <div className={'text-white text-2xl font-bold'}>
-        Bienvenue sur votre espace ExoMaster, <span className={'text-blue-600'}>{auth.user?.username}</span> !
-      </div>
+      <Head title={folder.name}/>
 
-      <FolderComponent folder={null} folderName={"Home"} path={['Home']} list={list} setList={setList}/>
+      <FolderComponent folder={folder} folderName={folder.name} path={['Home']} list={list} setList={setList}/>
 
-      <ExerciseStoreModal exercises={exercises} setExercises={setExercises} actFolder={null}/>
-      <FolderStoreModal folders={folders} setFolders={setFolders} actFolder={null}/>
+      <ExerciseStoreModal exercises={exercises} setExercises={setExercises} actFolder={folder}/>
+      <FolderStoreModal folders={folders} setFolders={setFolders} actFolder={folder}/>
 
     </DashboardLayout>
   )

@@ -1,8 +1,59 @@
 import { Modal, ModalContent, useDisclosure } from '@nextui-org/modal'
 import { Button, Card, CardBody, Input } from '@nextui-org/react'
+import React, { useState } from 'react'
+import { toast } from 'sonner'
+import Exercise from '#models/exercise'
+import Folder from '#models/folder'
 
-export default function ExerciseStoreModal() {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure()
+interface ExerciseStoreModalProps {
+  exercises: Exercise[],
+  setExercises: (exercises: Exercise[]) => void,
+  actFolder: Folder | null
+}
+
+export default function ExerciseStoreModal({exercises, setExercises, actFolder}: ExerciseStoreModalProps) {
+  const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure()
+
+  const [error, setError] = useState<string | null>(null)
+
+  const sendForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    // @ts-ignore
+    console.log(event.currentTarget.name.value)
+    const response = await fetch('/exercises', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        // @ts-ignore
+        name: event.currentTarget.name.value,
+        language: event.currentTarget.language.value,
+        description: event.currentTarget.description.value,
+        parentId: actFolder ? actFolder.uuid : null
+      })
+    })
+    const data = await response.json()
+    console.log(data)
+
+    if (!response.ok) {
+      console.log(response)
+      setError("Erreur lors de la création de l'exercises.")
+      return
+    }
+
+    console.log(response)
+
+    if (data.error) {
+      console.log(data.error)
+      setError("Erreur lors de la création de l'exercises.")
+      return
+    }
+    setExercises([...exercises, data])
+    toast.success('Dossier créé.')
+    onClose()
+  }
 
   return (
     <>
@@ -22,8 +73,16 @@ export default function ExerciseStoreModal() {
             <div className="flex flex-col w-full">
               <Card className="max-w-full">
                 <CardBody className="overflow-hidden">
-                  <form method="POST" action="/exercises" className={"space-y-4"}>
+                  <form onSubmit={sendForm} className={"space-y-4"}>
                     <h1 className={"flex justify-center text-center text-3xl font-bold"}>Création d'un exercise !</h1>
+                    <div>
+                      {error && (
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                          <strong className="font-bold">Erreur !</strong>
+                          <span className="block sm:inline">{error}</span>
+                        </div>
+                      )}
+                    </div>
                     <div className={"flex space-x-5"}>
                     <Input
                       autoFocus
@@ -35,7 +94,6 @@ export default function ExerciseStoreModal() {
                       required
                     />
                     <Input
-                      autoFocus
                       name="language"
                       label="Language de l'exercice"
                       placeholder="Python, Javascript, etc."
@@ -45,7 +103,6 @@ export default function ExerciseStoreModal() {
                     />
                     </div>
                     <Input
-                      autoFocus
                       name="description"
                       label="Description de l'exercice"
                       placeholder="Entrez la description de l'exercice"
