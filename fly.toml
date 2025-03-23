@@ -5,6 +5,9 @@
 
 app = 'exomaster'
 primary_region = 'cdg'
+[experimental]
+  cmd = ["start.sh"]
+  entrypoint = ["sh"]
 
 [build]
 
