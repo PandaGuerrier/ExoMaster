@@ -1,5 +1,4 @@
 set -ex
-cd /app
-cd /build
-ls
-node ./server.js
+cd /app/build
+npm ci --omit="dev"
+node bin/server.js
