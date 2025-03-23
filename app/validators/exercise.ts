@@ -16,5 +16,6 @@ export const createExerciseStoreValidator = vine.compile(
     name: vine.string(),
     description: vine.string(),
     language: vine.string(),
+    parentId: vine.string().nullable(),
   })
 )

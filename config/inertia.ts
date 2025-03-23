@@ -17,6 +17,7 @@ export default defineConfig({
       if (auth) {
         await auth.user?.load('role')
         await auth.user?.load('exercises')
+        await auth.user?.load('folders')
       }
 
       return ctx.auth.use('web') ?? null

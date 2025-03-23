@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Exercise from '#models/exercise'
 import { createExerciseStoreValidator, createExerciseUpdateValidator } from '#validators/exercise'
 import ExercisePolicy from '#policies/exercise_policy'
+import Folder from '#models/folder'
 
 export default class ExercisesController {
   public async show({ inertia, params, auth }: HttpContext) {
@@ -42,8 +43,15 @@ export default class ExercisesController {
       userId: user.id
     })
 
-    await user.related('exercises').attach([exercise.id])
+    if (data.parentId) {
+      const user = auth.use('web').user!
+      const parent = await Folder.query().where('uuid', data.parentId).andWhere('userId', user.id).firstOrFail()
 
-    return response.redirect('/')
+      await parent.related('exercises').attach([exercise.id])
+    } else {
+      await user.related('exercises').attach([exercise.id])
+    }
+
+    return response.json(exercise)
   }
 }

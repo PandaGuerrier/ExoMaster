@@ -6,6 +6,7 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Exercise from '#models/exercise'
 import Role from '#models/role'
+import Folder from '#models/folder'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['username'],
@@ -33,6 +34,11 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @manyToMany(() => Exercise)
   declare exercises: ManyToMany<typeof Exercise> // for custom exercises
+
+  @manyToMany(() => Folder, {
+    relatedKey: 'uuid'
+  })
+  declare folders: ManyToMany<typeof Folder> // for custom exercises
 
   @column.dateTime({autoCreate: true})
   declare createdAt: DateTime
