@@ -1,5 +1,6 @@
 set -ex
 cd /app
-ls
+
 cd /build
+ls
 node ./server.js
