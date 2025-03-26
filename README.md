@@ -1,19 +1,15 @@
 # ExoMaster
 
-ExoMaster is a tool for managing and running exercises in a classroom setting. It is designed to be used in a classroom setting where students are working on exercises and the teacher wants to be able to see the progress of the students in real time.
-
+ExoMaster is a tool for managing and running python file online, like "Notebook Jupiter" but with a better UI and more tools.
 ## Features
 
-- Create exercises
-- Run exercises
-- View progress of students
-- View code of students
-- View output of students
-- View errors of students
-- View logs of students
-- View time taken by students
-- Create custom exercises
-- Use the default exercises by the bac subject in NSI (France)
+- Create file (python (actual), txt (soon), js (soon), dart (soon))
+- Create parents (files) with subparents..
+- Execute the code in the file (python only)
 
+## SOON
+- Introduce a chatgpt conversation
+- Execute JS, Dart, and other langages
+--
 
-Made by [Jules Lofficial](https://pandaguerrier.fr)
+## Made by [Jules Lofficial](https://pandaguerrier.fr)
