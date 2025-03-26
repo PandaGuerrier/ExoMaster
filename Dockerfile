@@ -1,51 +1,27 @@
-# syntax = docker/dockerfile:1
-
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20.18.0
-FROM node:${NODE_VERSION}-slim AS base
-
-LABEL fly_launch_runtime="AdonisJS"
-
-# AdonisJS app lives here
+# All deps stage
+FROM base AS deps
 WORKDIR /app
+ADD package.json package-lock.json ./
+RUN npm ci
 
-# Set production environment
-ENV NODE_ENV="production"
+# Production only deps stage
+FROM base AS production-deps
+WORKDIR /app
+ADD package.json package-lock.json ./
+RUN npm ci --omit=dev
 
-
-# Throw-away build stage to reduce size of final image
+# Build stage
 FROM base AS build
+WORKDIR /app
+COPY --from=deps /app/node_modules /app/node_modules
+ADD . .
+RUN node ace build
 
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
-
-# Install node modules
-COPY .yarnrc.yml package.json ./
-RUN npm install --include=dev
-
-# Copy application code
-COPY . .
-
-# Build application
-RUN npm run build
-
-
-# Final stage for app image
+# Production stage
 FROM base
-
-# Copy built application
-COPY --from=build /app /app
-
-# Entrypoint sets up the container.
-ENTRYPOINT [ "/app/docker-entrypoint.js" ]
-
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
-ENV CACHE_VIEWS="true" \
-    DB_CONNECTION="pg" \
-    DRIVE_DISK="local" \
-    HOST="0.0.0.0" \
-    PORT="3000" \
-    SESSION_DRIVER="cookie"
-CMD [ "node", "/app/build/server.js" ]
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=production-deps /app/node_modules /app/node_modules
+COPY --from=build /app/build /app
+EXPOSE 8080
+CMD ["node", "./bin/server.js"]
