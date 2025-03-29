@@ -6,7 +6,14 @@ import adonisjs from '@adonisjs/vite/client'
 import path from 'node:path'
 
 export default defineConfig({
-  plugins: [inertia({ ssr: { enabled: false } }), react(), adonisjs({ entrypoints: ['inertia/app/app.tsx'], reload: ['resources/views/**/*.edge'] })],
+  plugins: [
+    inertia({ssr: {enabled: false}}), react(),
+    adonisjs({
+      entrypoints: ['inertia/app/app.tsx', 'resources/css/app.css'],
+      reload: ['resources/views/**/*.edge'],
+      assetsUrl: 'resources/css',
+    })
+  ],
 
   /**
    * Define aliases for importing modules from
@@ -15,7 +22,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '~/': `${getDirname(import.meta.url)}/inertia/`,
-      "@/": path.resolve(__dirname, "./inertia/components/ui"),
-    },
-  },
+      '@/': path.resolve(__dirname, './inertia/components/ui')
+    }
+  }
 })
