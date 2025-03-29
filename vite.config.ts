@@ -15,7 +15,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '~/': `${getDirname(import.meta.url)}/inertia/`,
-      "@": path.resolve(__dirname, "./inertia/components/ui"),
+      "@/": path.resolve(__dirname, "./inertia/components/ui"),
     },
   },
 })

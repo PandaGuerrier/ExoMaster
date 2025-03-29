@@ -13,8 +13,5 @@
 */
 
 export const policies = {
-  DefaultExercisePolicy: () => import('#policies/default_exercise_policy'),
-  DefaultSubjectPolicy: () => import('#policies/default_subject_policy'),
   ExercisePolicy: () => import('#policies/exercise_policy'),
-  SubjectPolicy: () => import('#policies/subject_policy')
 }
