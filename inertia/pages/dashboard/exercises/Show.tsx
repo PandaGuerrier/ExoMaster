@@ -4,10 +4,9 @@ import { InferPageProps } from '@adonisjs/inertia/types'
 import ExercisesController from '#controllers/common/users/exercises_controller'
 import { useEffect, useState, useCallback } from 'react'
 import MonacoEditor from '@uiw/react-monacoeditor'
-import { Button } from '@nextui-org/react'
+import { Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, useDisclosure } from '@nextui-org/react'
 import axios from 'axios'
 import { toast } from 'sonner'
-import React from 'react'
 
 declare global {
   interface window {
@@ -15,11 +14,9 @@ declare global {
   }
 }
 
-
-// Fonction de debounce
 function debounce(func: Function, wait: number) {
   let timeout: NodeJS.Timeout
-  return function(...args: any[]) {
+  return (...args: any[]) => {
     clearTimeout(timeout)
     // @ts-ignore
     timeout = setTimeout(() => func.apply(this, args), wait)
@@ -31,16 +28,25 @@ export default function ExerciseShow({ exercise }: InferPageProps<ExercisesContr
   const [output, setOutput] = useState(exercise.result)
   const [pyodide, setPyodide] = useState<any>(null)
   const [name] = useState(exercise.name)
-  const [description] = useState(exercise.description)
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
 
   useEffect(() => {
     const loadPyodide = async () => {
+      let time = {
+        start: new Date().getTime(),
+        sleep: (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+      }
+
       const pyodide = await (window as any).loadPyodide({
         indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.18.1/full/',
-        stdout: (msg: any) => setOutput((prev: any) => prev + '<div> >>> ' + msg + '</div>')
-      }) // mettre un wss pour l'execution avec le result
-      console.log(pyodide)
+        stdout: (msg: any) => {
+          setOutput((prev: any) => prev + '<div> >>> ' + msg + '</div>')
+          if (!isOpen) onOpen()
+        }
+      })
       setPyodide(pyodide)
+      pyodide.registerJsModule('time', time)
     }
 
     if (!pyodide) {
@@ -60,20 +66,8 @@ export default function ExerciseShow({ exercise }: InferPageProps<ExercisesContr
   }, 1000), [code, output])
 
   const handleCodeChange = (value: string) => {
-    console.log('Code has changed:', value)
     setCode(value)
     save()
-  }
-
-  function setFinish() {
-    axios.put(``, {
-      code: code,
-      result: output,
-      isFinish: true,
-    }).then(() => {
-      toast.success('Exercice terminé avec succès !')
-      setTimeout(() => window.location.href = `/`, 2000)
-    })
   }
 
   async function executeCode() {
@@ -84,55 +78,60 @@ export default function ExerciseShow({ exercise }: InferPageProps<ExercisesContr
         pyodide.runPython(code)
       } catch (error) {
         setOutput(error.toString())
+        if (!isOpen) onOpen()
       }
     }
   }
 
   useEffect(() => {
-    // This effect will run whenever `output` changes
     console.log('Output has changed:', output)
   }, [output])
 
   return (
     <DashboardLayout>
       <Head title={name}/>
-      <div className={'md:space-y-5'}>
-        <div>{exercise.isFinish ? "Vous avez marqué cet exercise en fini !" : ""}</div>
-        <div className={'font-bold text-2xl'}>Nom de votre exercise: {name}</div>
-        <div className={'font-bold'}>Description de votre exercise:</div>
-        <div>{description}</div>
-      </div>
-      <div className={'md:flex md:space-x-5'}>
-        <div className={'h-[50vh] md:h-[70vh] w-full'}>
-          <MonacoEditor
-            language="python"
-            onChange={(value: string) => handleCodeChange(value)}
-            value={exercise.code}
-            options={{
-              selectOnLineNumbers: true,
-              roundedSelection: false,
-              cursorStyle: 'line',
-              automaticLayout: true,
-              theme: 'vs-dark'
-            }}
-            width="100%"
-          />
-        </div>
-
-        <div className={'w-full space-y-5'}>
-          <div className={'flex space-x-5'}>
-            <Button className={'mt-5'} variant={'flat'} color={'success'} fullWidth
-                    onClick={() => executeCode()}>Executer</Button>
-            <Button className={'mt-5'} variant={'flat'} color={'warning'} fullWidth
-                    onClick={() => setFinish()}>J'ai fini !</Button>
-          </div>
-
-          <div className={'font-bold'}>Résultat:</div>
-          <div className={'bg-zinc-800 p-5 rounded-md max-h-44 md:max-h-80 overflow-y-auto'}>
-            <div dangerouslySetInnerHTML={{__html: output}}/>
-          </div>
+      <div className={''}>
+        <div>{exercise.isFinish ? 'Vous avez marqué cet exercise en fini !' : ''}</div>
+        <div className={'font-bold text-2xl'}>Fichier: {name}.{exercise.language}</div>
+        <div className={'flex space-x-5'}>
+          <Button className={'mt-5'} variant={'flat'} color={'primary'} onClick={onOpen}>Ouvrir la console</Button>
+          <Button className={'mt-5'} variant={'flat'} color={'success'} onClick={() => executeCode()}>Executer</Button>
         </div>
       </div>
+      <div className={'h-full w-full'}>
+        <MonacoEditor
+          language={exercise.language}
+          onChange={(value: string) => handleCodeChange(value)}
+          value={exercise.code}
+          options={{
+            selectOnLineNumbers: true,
+            roundedSelection: false,
+            cursorStyle: 'line',
+            automaticLayout: true,
+            theme: 'vs-dark'
+          }}
+          height={'100%'}
+          width="100%"
+        />
+      </div>
+      <Drawer
+        isOpen={isOpen}
+        placement={"bottom"}
+        onOpenChange={onOpenChange}
+        defaultOpen={true}
+      >
+        <DrawerContent>
+          {() => (
+            <>
+              <DrawerHeader className="flex flex-col gap-1">Console {exercise.language}</DrawerHeader>
+              <DrawerBody>
+                <div dangerouslySetInnerHTML={{__html: output}}/>
+              </DrawerBody>
+            </>
+          )}
+        </DrawerContent>
+      </Drawer>
+
     </DashboardLayout>
   )
 }

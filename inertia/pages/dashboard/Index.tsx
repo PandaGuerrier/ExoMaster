@@ -8,6 +8,7 @@ import FolderComponent from '~/components/Folder'
 import ExerciseStoreModal from '~/components/modals/ExerciseStoreModal'
 import FolderStoreModal from '~/components/modals/FolderStoreModal'
 import React from 'react'
+import FileDropModal from '~/components/modals/FileDropModal'
 
 export default function Index() {
   const auth = useAuth()
@@ -35,7 +36,8 @@ export default function Index() {
     <DashboardLayout>
       <Head title={'Dashboard'}/>
       <div className={'text-white text-2xl font-bold'}>
-        Bienvenue sur votre espace ExoMaster, <span className={'text-blue-600'}>{auth.user?.username}</span> !
+        <h1>Bienvenue sur votre espace ExoMaster, <span className={'text-blue-600'}>{auth.user?.username}</span> !</h1>
+        <FileDropModal exercises={exercises} setExercises={setExercises}/>
       </div>
 
       <FolderComponent folder={null} folderName={"Home"} path={['Home']} list={list} setList={setList}/>

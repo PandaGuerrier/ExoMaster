@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeUpdate, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Folder from '#models/folder'
 
@@ -12,9 +12,6 @@ export default class Exercise extends BaseModel {
 
   @column()
   declare description: string | null
-
-  @column()
-  declare isFinish: boolean
 
   @column()
   declare userId: number
@@ -32,7 +29,7 @@ export default class Exercise extends BaseModel {
   declare result: string // the result of the code
 
   @column()
-  declare language: string // the language of the code
+  declare language: "python" | "javascript" | "dart"  | "txt" // the language of the code
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -43,13 +40,6 @@ export default class Exercise extends BaseModel {
   @column.dateTime()
   declare finishedAt: DateTime
 
-  @beforeUpdate()
-  public static async updateFinishedAt(exercise: Exercise) {
-    if (exercise.isFinish && !exercise.finishedAt) {
-      exercise.finishedAt = DateTime.now()
-    }
-  }
-
   async getPath(): Promise<string[]> {
     if (this.parent === null) {
       return [this.name]
@@ -59,5 +49,4 @@ export default class Exercise extends BaseModel {
     let path = await folder.getPath()
     return path.concat(this.name)
   }
-
 }

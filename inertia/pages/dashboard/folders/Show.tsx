@@ -7,6 +7,7 @@ import FolderComponent from '~/components/Folder'
 import ExerciseStoreModal from '~/components/modals/ExerciseStoreModal'
 import FolderStoreModal from '~/components/modals/FolderStoreModal'
 import React from 'react'
+import FileDropModal from '~/components/modals/FileDropModal'
 
 interface FolderProps {
   folder: Folder
@@ -36,6 +37,7 @@ export default function Show({ folder }: FolderProps) {
   return (
     <DashboardLayout>
       <Head title={folder.name}/>
+      <FileDropModal exercises={exercises} setExercises={setExercises} actFolder={folder}/>
 
       <FolderComponent folder={folder} folderName={folder.name} path={['Home']} list={list} setList={setList}/>
 

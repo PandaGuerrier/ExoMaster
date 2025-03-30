@@ -1,5 +1,5 @@
 import { Modal, ModalContent, useDisclosure } from '@nextui-org/modal'
-import { Button, Card, CardBody, Input } from '@nextui-org/react'
+import { Button, Card, CardBody, Input, Select, SelectItem } from '@nextui-org/react'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
 import Exercise from '#models/exercise'
@@ -30,7 +30,7 @@ export default function ExerciseStoreModal({exercises, setExercises, actFolder}:
         // @ts-ignore
         name: event.currentTarget.name.value,
         language: event.currentTarget.language.value,
-        description: event.currentTarget.description.value,
+        description: event.currentTarget.description.value || 'Pas de description',
         parentId: actFolder ? actFolder.uuid : null
       })
     })
@@ -39,7 +39,7 @@ export default function ExerciseStoreModal({exercises, setExercises, actFolder}:
 
     if (!response.ok) {
       console.log(response)
-      setError("Erreur lors de la création de l'exercises.")
+      setError('Erreur lors de la création de l\'exercises.')
       return
     }
 
@@ -47,7 +47,7 @@ export default function ExerciseStoreModal({exercises, setExercises, actFolder}:
 
     if (data.error) {
       console.log(data.error)
-      setError("Erreur lors de la création de l'exercises.")
+      setError('Erreur lors de la création de l\'exercises.')
       return
     }
     setExercises([...(exercises as Exercise[]), data as Exercise])
@@ -73,34 +73,39 @@ export default function ExerciseStoreModal({exercises, setExercises, actFolder}:
             <div className="flex flex-col w-full">
               <Card className="max-w-full">
                 <CardBody className="overflow-hidden">
-                  <form onSubmit={sendForm} className={"space-y-4"}>
-                    <h1 className={"flex justify-center text-center text-3xl font-bold"}>Création d'un exercise !</h1>
+                  <form onSubmit={sendForm} className={'space-y-4'}>
+                    <h1 className={'flex justify-center text-center text-3xl font-bold'}>Création d'un exercise !</h1>
                     <div>
                       {error && (
-                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                             role="alert">
                           <strong className="font-bold">Erreur !</strong>
                           <span className="block sm:inline">{error}</span>
                         </div>
                       )}
                     </div>
-                    <div className={"flex space-x-5"}>
-                    <Input
-                      autoFocus
-                      name="name"
-                      label="Nom de l'exercice"
-                      placeholder="Entrez le nom de l'exercice"
-                      variant="bordered"
-                      color={'primary'}
-                      required
-                    />
-                    <Input
-                      name="language"
-                      label="Language de l'exercice"
-                      placeholder="Python, Javascript, etc."
-                      variant="bordered"
-                      color={'primary'}
-                      required
-                    />
+                    <div className={'flex space-x-5'}>
+                      <Input
+                        autoFocus
+                        name="name"
+                        label="Nom de l'exercice"
+                        placeholder="Entrez le nom de l'exercice"
+                        variant="bordered"
+                        color={'primary'}
+                        required
+                      />
+                      <Select
+                        name="language"
+                        label="Langage"
+                        placeholder="Choisissez un langage"
+                        variant="bordered"
+                        color={'primary'}
+                        required
+                      >
+                        <SelectItem key="python" value="python">Python</SelectItem>
+                        <SelectItem key="javascript" value="javascript">JavaScript</SelectItem>
+                        <SelectItem key="dart" value="dart">Dart</SelectItem>
+                      </Select>
                     </div>
                     <Input
                       name="description"
@@ -108,11 +113,7 @@ export default function ExerciseStoreModal({exercises, setExercises, actFolder}:
                       placeholder="Entrez la description de l'exercice"
                       variant="bordered"
                       color={'primary'}
-                      required
                     />
-
-
-
                     <Button type="submit" color="primary" variant="shadow" fullWidth>
                       Créer l'exercice
                     </Button>

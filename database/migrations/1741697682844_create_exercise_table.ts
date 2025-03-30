@@ -10,10 +10,9 @@ export default class extends BaseSchema {
       table.text('description').nullable()
       table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
       table.string('parent_id').unsigned().references('uuid').inTable('folders').onDelete('CASCADE')
-      table.boolean('is_finish').defaultTo(false)
       table.text('code').notNullable().defaultTo('# Écrivez votre code ici')
       table.text('result').notNullable().defaultTo('')
-      table.string('language').notNullable().defaultTo('python')
+      table.enum('language', ['python', 'javascript', 'dart', 'txt']).notNullable().defaultTo('python')
 
       table.timestamp('created_at')
       table.timestamp('updated_at')
