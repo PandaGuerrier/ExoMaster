@@ -7,7 +7,6 @@ import Folder from '#models/folder'
 import FolderComponent from '~/components/Folder'
 import ExerciseStoreModal from '~/components/modals/ExerciseStoreModal'
 import FolderStoreModal from '~/components/modals/FolderStoreModal'
-import React from 'react'
 import FileDropModal from '~/components/modals/FileDropModal'
 
 export default function Index() {
@@ -36,8 +35,8 @@ export default function Index() {
     <DashboardLayout>
       <Head title={'Dashboard'}/>
       <div className={'text-white text-2xl font-bold'}>
-        <h1>Bienvenue sur votre espace ExoMaster, <span className={'text-blue-600'}>{auth.user?.username}</span> !</h1>
-        <FileDropModal exercises={exercises} setExercises={setExercises}/>
+        <h1>Bienvenue sur votre espace ExoMaster G, <span className={'text-blue-600'}>{auth.user?.username}</span> !</h1>
+        <FileDropModal exercises={exercises} setExercises={setExercises} actFolder={null}/>
       </div>
 
       <FolderComponent folder={null} folderName={"Home"} path={['Home']} list={list} setList={setList}/>
