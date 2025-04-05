@@ -35,7 +35,7 @@ export default function Index() {
     <DashboardLayout>
       <Head title={'Dashboard'}/>
       <div className={'text-white text-2xl font-bold'}>
-        <h1>Bienvenue sur votre espace ExoMaster G, <span className={'text-blue-600'}>{auth.user?.username}</span> !</h1>
+        <h1>Bienvenue sur votre espace ExoMaster, <span className={'text-blue-600'}>{auth.user?.username}</span> !</h1>
         <FileDropModal exercises={exercises} setExercises={setExercises} actFolder={null}/>
       </div>
 
