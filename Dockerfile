@@ -25,9 +25,8 @@ RUN node ace build --ignore-ts-errors
 # Production stage
 FROM base
 ENV NODE_ENV=production
-ENV PORT=3333
 WORKDIR /app
 COPY --from=production-deps /app/node_modules /app/node_modules
 COPY --from=build /app/build /app
-EXPOSE 3333
+EXPOSE 8085
 CMD ["node", "./bin/server.js"]

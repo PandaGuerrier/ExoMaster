@@ -17,19 +17,18 @@ services:
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=production
-      - PORT=3333
-      - HOST=127.0.0.1
+      - PORT=8085
+      - HOST=0.0.0.0
       - LOG_LEVEL=info
       - APP_KEY=hyspKwOUZirYTCPbUCgP9yR56265dvdvdv6aSn1OOhy
       - SESSION_DRIVER=cookie
-      - DB_CONNECTION=pg
-      - PG_HOST=db
-      - PG_PORT=5415
-      - PG_USER=postgres
-      - PG_PASSWORD=postgres
-      - PG_DB_NAME=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=postgres
     ports:
-      - '3333:3333'
+      - '8085:8085'
     depends_on:
       - db
 
