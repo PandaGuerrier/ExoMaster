@@ -37,13 +37,13 @@ export default class Folder extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  async getPath(): Promise<string[]> {
+  getPath(): string[] {
     if (this.parent === null) {
       return [this.name]
     }
 
     let folder = this.parent
-    let path = await folder.getPath()
+    let path = folder.getPath()
     return path.concat(this.name)
   }
 

@@ -4,7 +4,7 @@ import { Head } from '@inertiajs/react'
 import { useEffect, useState } from 'react'
 import Exercise from '#models/exercise'
 import Folder from '#models/folder'
-import FolderComponent from '~/components/Folder'
+import FolderComponent from '~/components/FolderComponent'
 import ExerciseStoreModal from '~/components/modals/ExerciseStoreModal'
 import FolderStoreModal from '~/components/modals/FolderStoreModal'
 import FileDropModal from '~/components/modals/FileDropModal'
@@ -38,8 +38,8 @@ export default function Index() {
         <h1>Bienvenue sur votre espace ExoMaster, <span className={'text-blue-600'}>{auth.user?.username}</span> !</h1>
         <FileDropModal exercises={exercises} setExercises={setExercises} actFolder={null}/>
       </div>
+      <FolderComponent folder={null} folderName={"Home"} path={['Home']} list={list} />
 
-      <FolderComponent folder={null} folderName={"Home"} path={['Home']} list={list} setList={setList}/>
 
       <ExerciseStoreModal exercises={exercises} setExercises={setExercises} actFolder={null}/>
       <FolderStoreModal folders={folders} setFolders={setFolders} actFolder={null}/>

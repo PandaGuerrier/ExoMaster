@@ -3,10 +3,9 @@ import { Head } from '@inertiajs/react'
 import { useEffect, useState } from 'react'
 import Exercise from '#models/exercise'
 import Folder from '#models/folder'
-import FolderComponent from '~/components/Folder'
+import FolderComponent from '~/components/FolderComponent'
 import ExerciseStoreModal from '~/components/modals/ExerciseStoreModal'
 import FolderStoreModal from '~/components/modals/FolderStoreModal'
-import React from 'react'
 import FileDropModal from '~/components/modals/FileDropModal'
 
 interface FolderProps {
@@ -37,9 +36,14 @@ export default function Show({ folder }: FolderProps) {
   return (
     <DashboardLayout>
       <Head title={folder.name}/>
+      <div className={'text-white text-2xl font-bold'}>
+        <h1>Bienvenue sur votre espace ExoMaster, <span className={'text-blue-600'}>{folder.name}</span> !</h1>
+        <h2 className={'text-xl font-bold'}>Dossier : {folder.name}</h2>
+        <h2 className={'text-xl font-bold'}>Chemin : {folder.getPath()}</h2>
+      </div>
       <FileDropModal exercises={exercises} setExercises={setExercises} actFolder={folder}/>
 
-      <FolderComponent folder={folder} folderName={folder.name} path={['Home']} list={list} setList={setList}/>
+      <FolderComponent folder={folder} folderName={folder.name} path={['Home']} list={list} />
 
       <ExerciseStoreModal exercises={exercises} setExercises={setExercises} actFolder={folder}/>
       <FolderStoreModal folders={folders} setFolders={setFolders} actFolder={folder}/>

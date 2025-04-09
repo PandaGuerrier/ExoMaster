@@ -16,22 +16,22 @@ import FoldersController from '#controllers/common/users/folders_controller'
 
 router.group(() => {
   router.group(() => {
-    router.post('/login', [AuthController, 'login'])
-    router.post('/register', [AuthController, 'register'])
+    router.post('/login', [AuthController, 'login']).as('auth.login')
+    router.post('/register', [AuthController, 'register']).as('auth.register')
   })
 
-  router.get('/logout', [AuthController, 'logout']).use(middleware.auth())
+  router.get('/logout', [AuthController, 'logout']).as('auth.logout').use(middleware.auth())
 }).prefix('auth')
 
 router.group(() => {
-    router.get('/:id', [ExercisesController, 'show'])
-    router.put('/:id', [ExercisesController, 'update'])
-    router.post('/', [ExercisesController, 'store'])
+    router.get('/:id', [ExercisesController, 'show']).as('exercises.show')
+    router.put('/:id', [ExercisesController, 'update']).as('exercises.update')
+    router.post('/', [ExercisesController, 'store']).as('exercises.store')
 }).prefix('exercises').use(middleware.auth())
 
 router.group(() => {
-  router.get('/:uuid', [FoldersController, 'show'])
-  router.post('/', [FoldersController, 'store'])
+  router.get('/:uuid', [FoldersController, 'show']).as('folders.show')
+  router.post('/', [FoldersController, 'store']).as('folders.store')
 }).prefix('folders').use(middleware.auth())
 
 router.get('/', [HomeController, 'index']).as('home')

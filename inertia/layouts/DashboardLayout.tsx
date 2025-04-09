@@ -9,7 +9,6 @@ import useAuth from '~/hooks/use_auth'
 import { Toaster } from 'sonner'
 import Folder from '#models/folder'
 import Exercise from '#models/exercise'
-import FileDropZone from '~/components/FileDropZone'
 
 export default function DashboardLayout({children}: { children: React.ReactNode }) {
   const [folders, setFolders] = useState([] as Folder[])
@@ -61,15 +60,14 @@ export default function DashboardLayout({children}: { children: React.ReactNode 
                 {open && <div className={'text-center mt-5'}>
                   Dossiers et fichiers
                 </div>}
-                {folders.map((folder, idx) => (
+                {folders.map((folder) => (
                   <SidebarLink
-                    key: idx
                     link={{
                       label: folder.name,
                       href: '/folders/' + folder.uuid,
                       icon: (
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"
                              className={'text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0'}>
                           <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
                         </svg>
@@ -78,15 +76,14 @@ export default function DashboardLayout({children}: { children: React.ReactNode 
                   />
                 ))}
 
-                {exercises.map((exercise, idx) => (
+                {exercises.map((exercise) => (
                   <SidebarLink
-                    key: idx
                     link={{
                       label: exercise.name,
                       href: '/exercises/' + exercise.id,
                       icon: (
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"
                              className={'text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0'}>
                           <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
                           <polyline points="13 2 13 9 20 9"/>
